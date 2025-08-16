@@ -227,10 +227,8 @@ const FormBuilder = () => {
   const [lastSavedFormUrl, setLastSavedFormUrl] = useState('');
 
   const handleImageUpload = async (file) => {
-    // --- YOUR CLOUDINARY DETAILS ---
     const CLOUD_NAME = 'dxhslj34r'
     const UPLOAD_PRESET = 'form_builder_uploads'
-    // --------------------------------
 
     if (!file) return null
     const formData = new FormData()
@@ -273,7 +271,6 @@ const FormBuilder = () => {
       questionType: type,
       image: '',
     }
-    // Set default structures for each question type
     if (type === 'Categorize') {
       newQuestion.categories = ['Category 1', 'Category 2']
       newQuestion.items = [{ name: 'Item 1', category: '' }]
@@ -303,11 +300,11 @@ const FormBuilder = () => {
     const formStructure = { title, headerImage, questions: questionsForAPI }
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/forms`,
+        'https://form-builder-api-nikhil.onrender.com/api/forms',
         formStructure
       )
       const formUrl = `${window.location.origin}/form/${response.data._id}`;
-      setLastSavedFormUrl(formUrl); // Set the URL to show the success screen
+      setLastSavedFormUrl(formUrl);
     } catch (error) {
       console.error('Error saving form:', error)
       alert('Failed to save form.')

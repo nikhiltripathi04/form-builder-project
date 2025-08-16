@@ -38,7 +38,6 @@ const CategorizeViewer = ({ question, onAnswerChange }) => {
 const ClozeViewer = ({ question, onAnswerChange }) => {
     const parts = useMemo(() => {
         if (!question.clozeText) return [];
-        // This regex splits the text by __word__ and keeps the delimiters
         return question.clozeText.split(/(__.*?__)/g).filter(part => part.length > 0);
     }, [question.clozeText]);
 
@@ -118,7 +117,7 @@ const FormViewer = () => {
   useEffect(() => {
     const fetchForm = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/forms/${formId}`);
+        const response = await axios.get(`https://form-builder-api-nikhil.onrender.com/api/forms/${formId}`);
         setForm(response.data);
       } catch (err) {
         setError('Failed to load the form. Please check the URL.');
@@ -147,7 +146,7 @@ const FormViewer = () => {
           };
         }),
       };
-      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/responses`, responsePayload);
+      await axios.post('https://form-builder-api-nikhil.onrender.com/api/responses', responsePayload);
       alert('Your response has been submitted successfully!');
     } catch (err) {
       console.error("Submission Error:", err.response ? err.response.data : err);
